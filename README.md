@@ -106,4 +106,16 @@ docker-compose up -d
 <ul>
   <li><strong>ViaIpe - coleta de logs:</strong> Exibe logs coletados pelo agente.</li>
   <li><strong>ViaIpe - coleta_max_usage:</strong> Exibe o uso máximo de CPU/memória.</li>
+
+  ---
+
+## Contribuição
+
+Se deseja contribuir para este projeto, fique à vontade para abrir **issues** ou **pull requests**.
+
+---
+
+## Licença
+
+Este projeto está licenciado sob a [Licença MIT](LICENSE).
 </ul>
