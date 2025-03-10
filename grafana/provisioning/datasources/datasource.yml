@@ -1,0 +1,7 @@
+apiVersion: 1
+datasources:
+  - name: SQLite
+    type: sqlite
+    access: proxy
+    url: /var/lib/grafana/data/monitoramento.db
+    isDefault: true

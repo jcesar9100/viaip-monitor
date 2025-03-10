@@ -1,0 +1,68 @@
+{
+  "dashboard": {
+    "panels": [
+      {
+        "type": "graph",
+        "title": "Disponibilidade Média - $location - $interface",
+        "targets": [
+          {
+            "rawSql": "SELECT timestamp AS time, availability FROM viaipe_stats WHERE location_name = '$location' AND interface_name = '$interface';",
+            "format": "time_series"
+          }
+        ]
+      },
+      {
+        "type": "graph",
+        "title": "Consumo de Banda Média - $location - $interface",
+        "targets": [
+          {
+            "rawSql": "SELECT timestamp AS time, bandwidth_usage FROM viaipe_stats WHERE location_name = '$location' AND interface_name = '$interface';",
+            "format": "time_series"
+          }
+        ]
+      },
+      {
+        "type": "table",
+        "title": "Qualidade - $location - $interface",
+        "targets": [
+          {
+            "rawSql": "SELECT timestamp AS time, quality FROM viaipe_stats WHERE location_name = '$location' AND interface_name = '$interface';",
+            "format": "table"
+          }
+        ]
+      },
+      {
+        "type": "table",
+        "title": "Interfaces - $location",
+        "targets": [
+          {
+            "rawSql": "SELECT timestamp AS time, interface_name, availability, bandwidth_usage, quality FROM viaipe_stats WHERE location_name = '$location';",
+            "format": "table"
+          }
+        ]
+      }
+    ],
+    "templating": {
+      "list": [
+        {
+          "name": "location",
+          "type": "query",
+          "query": "SELECT DISTINCT location_name FROM viaipe_stats;",
+          "current": {
+            "text": "UFNT - Araguaina CCA",
+            "value": "UFNT - Araguaina CCA"
+          }
+        },
+        {
+          "name": "interface",
+          "type": "query",
+          "query": "SELECT DISTINCT interface_name FROM viaipe_stats WHERE location_name = '$location';",
+          "current": {
+            "text": "e15268",
+            "value": "e15268"
+          }
+        }
+      ]
+    }
+  }
+}
