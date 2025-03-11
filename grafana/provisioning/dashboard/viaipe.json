@@ -1,68 +1,190 @@
 {
-  "dashboard": {
-    "panels": [
+  "annotations": {
+    "list": [
       {
-        "type": "graph",
-        "title": "Disponibilidade Média - $location - $interface",
-        "targets": [
-          {
-            "rawSql": "SELECT timestamp AS time, availability FROM viaipe_stats WHERE location_name = '$location' AND interface_name = '$interface';",
-            "format": "time_series"
-          }
-        ]
-      },
-      {
-        "type": "graph",
-        "title": "Consumo de Banda Média - $location - $interface",
-        "targets": [
-          {
-            "rawSql": "SELECT timestamp AS time, bandwidth_usage FROM viaipe_stats WHERE location_name = '$location' AND interface_name = '$interface';",
-            "format": "time_series"
-          }
-        ]
-      },
-      {
-        "type": "table",
-        "title": "Qualidade - $location - $interface",
-        "targets": [
-          {
-            "rawSql": "SELECT timestamp AS time, quality FROM viaipe_stats WHERE location_name = '$location' AND interface_name = '$interface';",
-            "format": "table"
-          }
-        ]
-      },
-      {
-        "type": "table",
-        "title": "Interfaces - $location",
-        "targets": [
-          {
-            "rawSql": "SELECT timestamp AS time, interface_name, availability, bandwidth_usage, quality FROM viaipe_stats WHERE location_name = '$location';",
-            "format": "table"
-          }
-        ]
-      }
-    ],
-    "templating": {
-      "list": [
-        {
-          "name": "location",
-          "type": "query",
-          "query": "SELECT DISTINCT location_name FROM viaipe_stats;",
-          "current": {
-            "text": "UFNT - Araguaina CCA",
-            "value": "UFNT - Araguaina CCA"
-          }
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
         },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "P2D2EEF3E092AF52B"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-BlYlRd"
+          },
+          "custom": {
+            "axisBorderShow": true,
+            "axisCenteredZero": false,
+            "axisColorMode": "series",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "left",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decmbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 17,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.73,
+        "colorByField": "location_name",
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "orientation": "horizontal",
+        "showValue": "always",
+        "stacking": "normal",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 100
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
         {
-          "name": "interface",
-          "type": "query",
-          "query": "SELECT DISTINCT interface_name FROM viaipe_stats WHERE location_name = '$location';",
-          "current": {
-            "text": "e15268",
-            "value": "e15268"
-          }
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "P2D2EEF3E092AF52B"
+          },
+          "queryText": "SELECT location_name, MAX(bandwidth_usage) AS max_bandwidth_usage\r\nFROM viaipe_stats\r\nGROUP BY location_name\r\nORDER BY max_bandwidth_usage DESC\r\nLIMIT 20;",
+          "queryType": "table",
+          "rawQueryText": "SELECT location_name, MAX(bandwidth_usage) AS max_bandwidth_usage\r\nFROM viaipe_stats\r\nGROUP BY location_name\r\nORDER BY max_bandwidth_usage DESC\r\nLIMIT 20;",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
         }
-      ]
+      ],
+      "title": "Consumo de banda média - Top 20 Clientes",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "frser-sqlite-datasource",
+        "uid": "P2D2EEF3E092AF52B"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 24,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "id": 1,
+      "options": {
+        "dedupStrategy": "exact",
+        "enableInfiniteScrolling": false,
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": true,
+        "showTime": false,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "P2D2EEF3E092AF52B"
+          },
+          "queryText": "SELECT timestamp AS time, location_name, interface_name,availability ,bandwidth_usage, quality   FROM viaipe_stats;",
+          "queryType": "table",
+          "rawQueryText": "SELECT timestamp AS time, location_name, interface_name,availability ,bandwidth_usage, quality   FROM viaipe_stats;",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
+        }
+      ],
+      "title": "Estatísticas de Consumo por Cliente",
+      "type": "logs"
     }
-  }
+  ],
+  "preload": false,
+  "refresh": "",
+  "schemaVersion": 40,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Viaipe",
+  "uid": "1152",
+  "version": 6,
+  "weekStart": ""
 }
