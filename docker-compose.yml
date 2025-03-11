@@ -11,9 +11,8 @@ services:
       - ./database:/var/lib/grafana/data  # Compartilha o banco de dados SQLite
       - ./database:/database
     environment:
-      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER}
-      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
-
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
     entrypoint:
       - /bin/sh
       - -c
